@@ -39,11 +39,31 @@
 			},
 			putStone(coordinateVal) {
 				if(this.stoneMap[coordinateVal] !== '-') return;
+				if(this.neighborStone(coordinateVal).length == 0) return;
 				this.stoneMap[coordinateVal] = this.turn;
 				this.changeTurn();
 			},
 			changeTurn() {
 				this.turn == 'b' ? this.turn = 'w' : this.turn = 'b';
+			},
+			neighborStone(coordinateVal) {
+				let a = coordinateVal.split('')[0];
+				let ai = this.alphabetArr.indexOf(a);
+				let aib = ai - 1;
+				let aia = ai + 1;
+				let b = parseInt(coordinateVal.split('')[1]);
+				let bb = b - 1;
+				let ba = b + 1;
+				let resultArr = [];
+				for(var i = aib ; i <= aia ; i++) {
+					for(var j = bb ; j <= ba ; j++) {
+						if (i < 0 || j < 1 || i >= 8 || j >8) break;
+						let s = this.alphabetArr[i];
+						let c = s + j;
+						if (this.stoneMap[c] !== '-') resultArr.push(c);
+					}
+				}
+				return resultArr;
 			}
 		},
 		computed: {

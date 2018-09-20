@@ -9,7 +9,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<h1 class="result">Black: {{ bNum }} - White: {{ wNum }}</h1>
+		<h1 class="result">Black ⚫ : {{ bNum }} - White ⚪ : {{ wNum }}</h1>
 	</div>
 </template>
 <script type="text/javascript">

@@ -1,6 +1,7 @@
 # vue-reversi
 
 > A Vue.js project
+> You can play a reversi game in your browser!
 
 ## Build Setup
 

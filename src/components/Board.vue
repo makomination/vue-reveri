@@ -40,9 +40,9 @@
 			putStone(coordinateVal) {
 				if(this.stoneMap[coordinateVal] !== '-') return;
 				if(this.neighborStones(coordinateVal).length == 0) return;
-				this.stoneMap[coordinateVal] = this.turn;
+				//this.stoneMap[coordinateVal] = this.turn;
 				this.flipStones(coordinateVal);
-				this.changeTurn();
+				//this.changeTurn();
 			},
 			changeTurn() {
 				this.turn == 'b' ? this.turn = 'w' : this.turn = 'b';
@@ -70,7 +70,44 @@
 				let neighborStones = this.neighborStones(coordinateVal);
 				neighborStones.forEach(position => {
 					if (this.stoneMap[position] !== this.turn) {
-						this.stoneMap[position] = this.turn;
+						//this.stoneMap[position] = this.turn;
+						let a = coordinateVal.split('')[0];
+						let ai = this.alphabetArr.indexOf(a);
+						let b = parseInt(coordinateVal.split('')[1]);
+						let positionA = position.split('')[0];
+						let positionAi = this.alphabetArr.indexOf(positionA);
+						let positionB = parseInt(position.split('')[1]);
+						// vertical check
+						if (ai == positionAi && b != positionB) {
+							if (b - positionB > 0) {
+								for (var j = positionB ; j >= 1 ; j--) {
+									let s = this.alphabetArr[ai];
+									let c = s + j;
+									if(this.stoneMap[c] == this.turn) {
+										for (var k = positionB ; k > j ; k--) {
+											let c2 = s + k;
+											this.stoneMap[c2] = this.turn;
+										}
+										this.stoneMap[coordinateVal] = this.turn;
+										this.changeTurn();
+									}
+								}
+							}
+							if (b - positionB < 0) {
+								for (var j = positionB ; j <= 8 ; j++) {
+									let s = this.alphabetArr[ai];
+									let c = s + j;
+									if(this.stoneMap[c] == this.turn) {
+										for (var k = positionB ; k < j ; k++) {
+											let c2 = s + k;
+											this.stoneMap[c2] = this.turn;
+										}
+										this.stoneMap[coordinateVal] = this.turn;
+										this.changeTurn();
+									}
+								}
+							}
+						}
 					}
 				});
 			}

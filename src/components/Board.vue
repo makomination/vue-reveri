@@ -71,6 +71,7 @@
 				neighborStones.forEach(position => {
 					if (this.stoneMap[position] !== this.turn) {
 						//this.stoneMap[position] = this.turn;
+						let alphabetArr = this.alphabetArr;
 						let a = coordinateVal.split('')[0];
 						let ai = this.alphabetArr.indexOf(a);
 						let b = parseInt(coordinateVal.split('')[1]);
@@ -100,6 +101,39 @@
 									if(this.stoneMap[c] == this.turn) {
 										for (var k = positionB ; k < j ; k++) {
 											let c2 = s + k;
+											this.stoneMap[c2] = this.turn;
+										}
+										this.stoneMap[coordinateVal] = this.turn;
+										this.changeTurn();
+									}
+								}
+							}
+						}
+						// horizontal check
+						if (ai != positionAi && b == positionB) {
+							if (ai - positionAi > 0) {
+								for (var i = positionAi ; i >= 0 ; i--) {
+									let sh = this.alphabetArr[i];
+									let ch = sh + b;
+									if(this.stoneMap[ch] == this.turn) {
+										for (var k = positionAi ; k > i ; k--) {
+											let s2 = this.alphabetArr[k]
+											let c2 = s2 + b;
+											this.stoneMap[c2] = this.turn;
+										}
+										this.stoneMap[coordinateVal] = this.turn;
+										this.changeTurn();
+									}
+								}
+							}
+							if (ai - positionAi < 0) {
+								for (var i = positionAi ; i <= 7 ; i++) {
+									let sh = this.alphabetArr[i];
+									let ch = sh + b;
+									if(this.stoneMap[ch] == this.turn) {
+										for (var k = positionAi ; k < i ; k++) {
+											let s2 = this.alphabetArr[k]
+											let c2 = s2 + b;
 											this.stoneMap[c2] = this.turn;
 										}
 										this.stoneMap[coordinateVal] = this.turn;

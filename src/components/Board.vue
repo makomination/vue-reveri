@@ -58,7 +58,7 @@
 				let resultArr = [];
 				for(var i = aib ; i <= aia ; i++) {
 					for(var j = bb ; j <= ba ; j++) {
-						if (i < 0 || j < 1 || i >= 8 || j >8) break;
+						if (i < 0 || j < 1 || i >= 8 || j >8) continue;
 						let s = this.alphabetArr[i];
 						let c = s + j;
 						if (this.stoneMap[c] !== '-') resultArr.push(c);

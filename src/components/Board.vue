@@ -39,14 +39,15 @@
 			},
 			putStone(coordinateVal) {
 				if(this.stoneMap[coordinateVal] !== '-') return;
-				if(this.neighborStone(coordinateVal).length == 0) return;
+				if(this.neighborStones(coordinateVal).length == 0) return;
 				this.stoneMap[coordinateVal] = this.turn;
+				this.flipStones(coordinateVal);
 				this.changeTurn();
 			},
 			changeTurn() {
 				this.turn == 'b' ? this.turn = 'w' : this.turn = 'b';
 			},
-			neighborStone(coordinateVal) {
+			neighborStones(coordinateVal) {
 				let a = coordinateVal.split('')[0];
 				let ai = this.alphabetArr.indexOf(a);
 				let aib = ai - 1;
@@ -64,6 +65,14 @@
 					}
 				}
 				return resultArr;
+			},
+			flipStones(coordinateVal) {
+				let neighborStones = this.neighborStones(coordinateVal);
+				neighborStones.forEach(position => {
+					if (this.stoneMap[position] !== this.turn) {
+						this.stoneMap[position] = this.turn;
+					}
+				});
 			}
 		},
 		computed: {

@@ -68,43 +68,46 @@
 			},
 			flipStones(coordinateVal) {
 				let neighborStones = this.neighborStones(coordinateVal);
+				let that = this;
+				//debugger;
 				neighborStones.forEach(position => {
-					if (this.stoneMap[position] !== this.turn) {
-						//this.stoneMap[position] = this.turn;
-						let alphabetArr = this.alphabetArr;
+					if (that.stoneMap[position] !== that.turn) {
+						let alphabetArr = that.alphabetArr;
+						let stoneMap = that.stoneMap;
+						let turn = that.turn;
+						let changeTurn = that.changeTurn;
 						let a = coordinateVal.split('')[0];
-						let ai = this.alphabetArr.indexOf(a);
+						let ai = alphabetArr.indexOf(a);
 						let b = parseInt(coordinateVal.split('')[1]);
 						let positionA = position.split('')[0];
-						let positionAi = this.alphabetArr.indexOf(positionA);
+						let positionAi = alphabetArr.indexOf(positionA);
 						let positionB = parseInt(position.split('')[1]);
+						let flag = false;
 						// vertical check
 						if (ai == positionAi && b != positionB) {
 							if (b - positionB > 0) {
 								for (var j = positionB ; j >= 1 ; j--) {
-									let s = this.alphabetArr[ai];
-									let c = s + j;
-									if(this.stoneMap[c] == this.turn) {
+									 var s = alphabetArr[ai];
+									 var c = s + j;
+									if(stoneMap[c] == turn) {
 										for (var k = positionB ; k > j ; k--) {
-											let c2 = s + k;
-											this.stoneMap[c2] = this.turn;
+											 var c2 = s + k;
+											stoneMap[c2] = turn;
+											flag = true;
 										}
-										this.stoneMap[coordinateVal] = this.turn;
-										this.changeTurn();
 									}
 								}
 							}
 							if (b - positionB < 0) {
 								for (var j = positionB ; j <= 8 ; j++) {
-									let s = this.alphabetArr[ai];
-									let c = s + j;
-									if(this.stoneMap[c] == this.turn) {
+									 var s = alphabetArr[ai];
+									 var c = s + j;
+									if(stoneMap[c] == turn) {
 										for (var k = positionB ; k < j ; k++) {
-											let c2 = s + k;
-											this.stoneMap[c2] = this.turn;
+											 var c2 = s + k;
+											stoneMap[c2] = turn;
+											flag = true;
 										}
-										this.stoneMap[coordinateVal] = this.turn;
-										this.changeTurn();
 									}
 								}
 							}
@@ -113,35 +116,38 @@
 						if (ai != positionAi && b == positionB) {
 							if (ai - positionAi > 0) {
 								for (var i = positionAi ; i >= 0 ; i--) {
-									let sh = this.alphabetArr[i];
-									let ch = sh + b;
-									if(this.stoneMap[ch] == this.turn) {
+									 var sh = alphabetArr[i];
+									 var ch = sh + b;
+									if(stoneMap[ch] == turn) {
 										for (var k = positionAi ; k > i ; k--) {
-											let s2 = this.alphabetArr[k]
-											let c2 = s2 + b;
-											this.stoneMap[c2] = this.turn;
+											 var s2 = alphabetArr[k]
+											 var c2 = s2 + b;
+											stoneMap[c2] = turn;
+											flag = true;
 										}
-										this.stoneMap[coordinateVal] = this.turn;
-										this.changeTurn();
 									}
 								}
 							}
 							if (ai - positionAi < 0) {
 								for (var i = positionAi ; i <= 7 ; i++) {
-									let sh = this.alphabetArr[i];
-									let ch = sh + b;
-									if(this.stoneMap[ch] == this.turn) {
+									 var sh = alphabetArr[i];
+									 var ch = sh + b;
+									if(stoneMap[ch] == turn) {
 										for (var k = positionAi ; k < i ; k++) {
-											let s2 = this.alphabetArr[k]
-											let c2 = s2 + b;
-											this.stoneMap[c2] = this.turn;
+											 var s2 = alphabetArr[k]
+											 var c2 = s2 + b;
+											stoneMap[c2] = turn;
+											flag = true;
 										}
-										this.stoneMap[coordinateVal] = this.turn;
-										this.changeTurn();
 									}
 								}
 							}
 						}
+						if (flag) {
+							stoneMap[coordinateVal] = turn;
+							changeTurn();
+						}
+						// TODO: diagonally check
 					}
 				});
 			}

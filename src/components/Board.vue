@@ -66,10 +66,13 @@
 				}
 				return resultArr;
 			},
+			//@param: coorinateVal: String 置いた石の座標
 			flipStones(coordinateVal) {
 				let neighborStones = this.neighborStones(coordinateVal);
 				let that = this;
 				//debugger;
+				let flag = false;
+				//@param: position: String: 周りの石の座標
 				neighborStones.forEach(position => {
 					if (that.stoneMap[position] !== that.turn) {
 						let alphabetArr = that.alphabetArr;
@@ -77,29 +80,29 @@
 						let turn = that.turn;
 						let changeTurn = that.changeTurn;
 						let a = coordinateVal.split('')[0];
-						let ai = alphabetArr.indexOf(a);
-						let b = parseInt(coordinateVal.split('')[1]);
+						let ai = alphabetArr.indexOf(a);//置いた石の座標のアルファベット部分
+						let b = parseInt(coordinateVal.split('')[1]);//置いた石の座標の数字部分(int)
 						let positionA = position.split('')[0];
-						let positionAi = alphabetArr.indexOf(positionA);
-						let positionB = parseInt(position.split('')[1]);
-						let flag = false;
+						let positionAi = alphabetArr.indexOf(positionA);//周りの石の座標のアルファベット部分
+						let positionB = parseInt(position.split('')[1]);//周りの石の座標の数字部分(int)
 						// vertical check
 						if (ai == positionAi && b != positionB) {
 							if (b - positionB > 0) {
-								for (var j = positionB ; j >= 1 ; j--) {
+								for (var j = positionB + 1 ; j >= 1 ; j--) {
 									 var s = alphabetArr[ai];
 									 var c = s + j;
 									if(stoneMap[c] == turn) {
 										for (var k = positionB ; k > j ; k--) {
-											 var c2 = s + k;
+											var c2 = s + k;
 											stoneMap[c2] = turn;
 											flag = true;
 										}
+										break;
 									}
 								}
 							}
 							if (b - positionB < 0) {
-								for (var j = positionB ; j <= 8 ; j++) {
+								for (var j = positionB - 1 ; j <= 8 ; j++) {
 									 var s = alphabetArr[ai];
 									 var c = s + j;
 									if(stoneMap[c] == turn) {
@@ -108,6 +111,7 @@
 											stoneMap[c2] = turn;
 											flag = true;
 										}
+										break;
 									}
 								}
 							}
@@ -115,7 +119,7 @@
 						// horizontal check
 						if (ai != positionAi && b == positionB) {
 							if (ai - positionAi > 0) {
-								for (var i = positionAi ; i >= 0 ; i--) {
+								for (var i = positionAi + 1 ; i >= 0 ; i--) {
 									 var sh = alphabetArr[i];
 									 var ch = sh + b;
 									if(stoneMap[ch] == turn) {
@@ -125,11 +129,12 @@
 											stoneMap[c2] = turn;
 											flag = true;
 										}
+										break;
 									}
 								}
 							}
 							if (ai - positionAi < 0) {
-								for (var i = positionAi ; i <= 7 ; i++) {
+								for (var i = positionAi - 1 ; i <= 7 ; i++) {
 									 var sh = alphabetArr[i];
 									 var ch = sh + b;
 									if(stoneMap[ch] == turn) {
@@ -139,17 +144,18 @@
 											stoneMap[c2] = turn;
 											flag = true;
 										}
+										break;
 									}
 								}
 							}
 						}
-						if (flag) {
-							stoneMap[coordinateVal] = turn;
-							changeTurn();
-						}
 						// TODO: diagonally check
 					}
 				});
+				if (flag) {
+					this.stoneMap[coordinateVal] = this.turn;
+					this.changeTurn();
+				}
 			}
 		},
 		computed: {

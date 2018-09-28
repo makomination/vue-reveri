@@ -89,8 +89,8 @@
 						if (ai == positionAi && b != positionB) {
 							if (b - positionB > 0) {
 								for (var j = positionB + 1 ; j >= 1 ; j--) {
-									 var s = alphabetArr[ai];
-									 var c = s + j;
+									var s = alphabetArr[ai];
+									var c = s + j;
 									if(stoneMap[c] == turn) {
 										for (var k = positionB ; k > j ; k--) {
 											var c2 = s + k;
@@ -120,8 +120,8 @@
 						if (ai != positionAi && b == positionB) {
 							if (ai - positionAi > 0) {
 								for (var i = positionAi + 1 ; i >= 0 ; i--) {
-									 var sh = alphabetArr[i];
-									 var ch = sh + b;
+									var sh = alphabetArr[i];
+									var ch = sh + b;
 									if(stoneMap[ch] == turn) {
 										for (var k = positionAi ; k > i ; k--) {
 											 var s2 = alphabetArr[k]
@@ -150,6 +150,36 @@
 							}
 						}
 						// TODO: diagonally check
+						debugger;
+						if (ai != positionAi && b != positionB) {
+							//-45°line check
+							//put downside
+							if (ai - positionAi > 0 && b - positionB > 0) {
+								var j = positionB - 1;
+								for (var i = positionAi - 1 ; i >= 0 ; i--){
+									//some codes here...
+									var sh = alphabetArr[i];
+									var c = sh + j;
+									if(stoneMap[c] == turn) {
+										var k2 = positionB;
+										for (var k = positionAi ; k > i ; k--) {
+											var s2 = alphabetArr[k]
+											var c2 = s2 + k2;
+											stoneMap[c2] = turn;
+											flag = true;
+											k2--;
+											if (k2 <= j) break;
+										}
+									}
+									//end of some codes
+									//jのインクリメントと終了条件
+									j--;
+									if (j < 1) break;
+								}
+							}
+							//put upside
+							//if (ai - positionAi < 0 )
+						}
 					}
 				});
 				if (flag) {

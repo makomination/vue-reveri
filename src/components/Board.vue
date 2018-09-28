@@ -178,7 +178,29 @@
 								}
 							}
 							//put upside
-							//if (ai - positionAi < 0 )
+							if (ai - positionAi < 0 && b - positionB < 0) {
+								var j = positionB + 1;
+								for (var i = positionAi + 1 ; i <= 7 ; i++){
+									//some codes here...
+									var sh = alphabetArr[i];
+									var c = sh + j;
+									if(stoneMap[c] == turn) {
+										var k2 = positionB;
+										for (var k = positionAi ; k < i ; k++) {
+											var s2 = alphabetArr[k]
+											var c2 = s2 + k2;
+											stoneMap[c2] = turn;
+											flag = true;
+											k2++;
+											if (k2 >= j) break;
+										}
+									}
+									//end of some codes
+									//jのインクリメントと終了条件
+									j++;
+									if (j > 8) break;
+								}
+							}
 						}
 					}
 				});

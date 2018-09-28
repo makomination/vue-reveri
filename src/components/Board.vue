@@ -150,7 +150,7 @@
 							}
 						}
 						// TODO: diagonally check
-						debugger;
+						//debugger;
 						if (ai != positionAi && b != positionB) {
 							//-45°line check
 							//put downside

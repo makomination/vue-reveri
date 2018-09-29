@@ -9,8 +9,8 @@
 				</tr>
 			</tbody>
 		</table>
-		<h1 class="result mt-3">Black ⚫ : {{ bNum }} - White ⚪ : {{ wNum }}</h1>
-		<button class="float-left mt-1">Pass</button>
+		<h1 class="result mt-3"><span :class="{myTurn: turn == 'b'}">Black ⚫ : {{ bNum }}</span> - <span :class="{myTurn: turn == 'w'}">White ⚪ : {{ wNum }}</span></h1>
+		<button class="float-left mt-1" @click="changeTurn()">Pass</button>
 	</div>
 </template>
 <script type="text/javascript">
@@ -298,4 +298,5 @@
 	.box {padding: 10px; margin-bottom: 1em}
 	.cell {width: 50px; height: 50px; padding: 0; border-color: black;}
 	.result {text-align: left;}
+	.myTurn {border: 2px solid #00000054; padding: 1px}
 </style>

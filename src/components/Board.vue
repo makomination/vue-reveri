@@ -31,7 +31,8 @@
 					a7: '-' ,b7: '-' ,c7: '-' ,d7: '-' ,e7: '-' ,f7: '-' ,g7: '-' ,h7: '-' ,
 					a8: '-' ,b8: '-' ,c8: '-' ,d8: '-' ,e8: '-' ,f8: '-' ,g8: '-' ,h8: '-' ,
 				},
-				turn: 'b'
+				turn: 'b',
+				history: []
 			}
 		},
 		methods: {
@@ -89,11 +90,13 @@
 						let positionAi = alphabetArr.indexOf(positionA);//周りの石の座標のアルファベット部分
 						let positionB = parseInt(position.split('')[1]);//周りの石の座標の数字部分(int)
 						// vertical check
+						//debugger;
 						if (ai == positionAi && b != positionB) {
 							if (b - positionB > 0) {
-								for (var j = positionB + 1 ; j >= 1 ; j--) {
+								for (var j = positionB - 1 ; j >= 1 ; j--) {
 									var s = alphabetArr[ai];
 									var c = s + j;
+									if(stoneMap[c] == '-') break;
 									if(stoneMap[c] == turn) {
 										for (var k = positionB ; k > j ; k--) {
 											var c2 = s + k;
@@ -105,9 +108,10 @@
 								}
 							}
 							if (b - positionB < 0) {
-								for (var j = positionB - 1 ; j <= 8 ; j++) {
-									 var s = alphabetArr[ai];
-									 var c = s + j;
+								for (var j = positionB + 1 ; j <= 8 ; j++) {
+									var s = alphabetArr[ai];
+									var c = s + j;
+									if(stoneMap[c] == '-') break;
 									if(stoneMap[c] == turn) {
 										for (var k = positionB ; k < j ; k++) {
 											 var c2 = s + k;
@@ -122,9 +126,10 @@
 						// horizontal check
 						if (ai != positionAi && b == positionB) {
 							if (ai - positionAi > 0) {
-								for (var i = positionAi + 1 ; i >= 0 ; i--) {
+								for (var i = positionAi - 1 ; i >= 0 ; i--) {
 									var sh = alphabetArr[i];
 									var ch = sh + b;
+									if(stoneMap[ch] == '-') break;
 									if(stoneMap[ch] == turn) {
 										for (var k = positionAi ; k > i ; k--) {
 											 var s2 = alphabetArr[k]
@@ -137,9 +142,10 @@
 								}
 							}
 							if (ai - positionAi < 0) {
-								for (var i = positionAi - 1 ; i <= 7 ; i++) {
-									 var sh = alphabetArr[i];
-									 var ch = sh + b;
+								for (var i = positionAi + 1 ; i <= 7 ; i++) {
+									var sh = alphabetArr[i];
+									var ch = sh + b;
+									if(stoneMap[ch] == '-') break;
 									if(stoneMap[ch] == turn) {
 										for (var k = positionAi ; k < i ; k++) {
 											 var s2 = alphabetArr[k]
@@ -164,6 +170,7 @@
 									//some codes here...
 									var sh = alphabetArr[i];
 									var c = sh + j;
+									if(stoneMap[c] == '-') break;
 									if(stoneMap[c] == turn) {
 										var k2 = positionB;
 										for (var k = positionAi ; k > i ; k--) {
@@ -189,6 +196,7 @@
 									//some codes here...
 									var sh = alphabetArr[i];
 									var c = sh + j;
+									if(stoneMap[c] == '-') break;
 									if(stoneMap[c] == turn) {
 										var k2 = positionB;
 										for (var k = positionAi ; k < i ; k++) {
@@ -217,6 +225,7 @@
 									//some codes here...
 									var sh = alphabetArr[i];
 									var c = sh + j;
+									if(stoneMap[c] == '-') break;
 									if(stoneMap[c] == turn) {
 										var k2 = positionB;
 										for (var k = positionAi ; k < i ; k++) {
@@ -242,6 +251,7 @@
 									//some codes here...
 									var sh = alphabetArr[i];
 									var c = sh + j;
+									if(stoneMap[c] == '-') break;
 									if(stoneMap[c] == turn) {
 										var k2 = positionB;
 										for (var k = positionAi ; k > i ; k--) {
@@ -265,6 +275,7 @@
 				if (flag) {
 					this.stoneMap[coordinateVal] = this.turn;
 					this.changeTurn();
+					this.history.push(this.stoneMap);
 				}
 			}
 		},

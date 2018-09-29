@@ -11,6 +11,7 @@
 		</table>
 		<h1 class="result mt-3"><span :class="{myTurn: turn == 'b'}">Black ⚫ : {{ bNum }}</span> - <span :class="{myTurn: turn == 'w'}">White ⚪ : {{ wNum }}</span></h1>
 		<button class="float-left mt-1" @click="changeTurn()">Pass</button>
+		<button class="float-left ml-1 mt-1" @click="back()">Back</button>
 	</div>
 </template>
 <script type="text/javascript">
@@ -32,7 +33,16 @@
 					a8: '-' ,b8: '-' ,c8: '-' ,d8: '-' ,e8: '-' ,f8: '-' ,g8: '-' ,h8: '-' ,
 				},
 				turn: 'b',
-				history: []
+				history: [{
+					a1: '-' ,b1: '-' ,c1: '-' ,d1: '-' ,e1: '-' ,f1: '-' ,g1: '-' ,h1: '-' ,
+					a2: '-' ,b2: '-' ,c2: '-' ,d2: '-' ,e2: '-' ,f2: '-' ,g2: '-' ,h2: '-' ,
+					a3: '-' ,b3: '-' ,c3: '-' ,d3: '-' ,e3: '-' ,f3: '-' ,g3: '-' ,h3: '-' ,
+					a4: '-' ,b4: '-' ,c4: '-' ,d4: 'w' ,e4: 'b' ,f4: '-' ,g4: '-' ,h4: '-' ,
+					a5: '-' ,b5: '-' ,c5: '-' ,d5: 'b' ,e5: 'w' ,f5: '-' ,g5: '-' ,h5: '-' ,
+					a6: '-' ,b6: '-' ,c6: '-' ,d6: '-' ,e6: '-' ,f6: '-' ,g6: '-' ,h6: '-' ,
+					a7: '-' ,b7: '-' ,c7: '-' ,d7: '-' ,e7: '-' ,f7: '-' ,g7: '-' ,h7: '-' ,
+					a8: '-' ,b8: '-' ,c8: '-' ,d8: '-' ,e8: '-' ,f8: '-' ,g8: '-' ,h8: '-' ,
+				}]
 			}
 		},
 		methods: {
@@ -50,6 +60,24 @@
 			},
 			changeTurn() {
 				this.turn == 'b' ? this.turn = 'w' : this.turn = 'b';
+			},
+			back() {
+				if (this.history.length == 1) return;
+				//debugger;
+				this.history[this.history.length - 1] = {
+					a1: '-' ,b1: '-' ,c1: '-' ,d1: '-' ,e1: '-' ,f1: '-' ,g1: '-' ,h1: '-' ,
+					a2: '-' ,b2: '-' ,c2: '-' ,d2: '-' ,e2: '-' ,f2: '-' ,g2: '-' ,h2: '-' ,
+					a3: '-' ,b3: '-' ,c3: '-' ,d3: '-' ,e3: '-' ,f3: '-' ,g3: '-' ,h3: '-' ,
+					a4: '-' ,b4: '-' ,c4: '-' ,d4: 'w' ,e4: 'b' ,f4: '-' ,g4: '-' ,h4: '-' ,
+					a5: '-' ,b5: '-' ,c5: '-' ,d5: 'b' ,e5: 'w' ,f5: '-' ,g5: '-' ,h5: '-' ,
+					a6: '-' ,b6: '-' ,c6: '-' ,d6: '-' ,e6: '-' ,f6: '-' ,g6: '-' ,h6: '-' ,
+					a7: '-' ,b7: '-' ,c7: '-' ,d7: '-' ,e7: '-' ,f7: '-' ,g7: '-' ,h7: '-' ,
+					a8: '-' ,b8: '-' ,c8: '-' ,d8: '-' ,e8: '-' ,f8: '-' ,g8: '-' ,h8: '-' ,
+				};//ベタ書きのリテラルをいれないと、勝手にVue側でreactiveにされてしまいバグる。(constですらだめ)
+				this.changeTurn();
+				let currentHistory = this.history.slice();
+				this.stoneMap = currentHistory[1];
+				this.history.shift();
 			},
 			neighborStones(coordinateVal) {
 				let a = coordinateVal.split('')[0];
@@ -275,7 +303,10 @@
 				if (flag) {
 					this.stoneMap[coordinateVal] = this.turn;
 					this.changeTurn();
-					this.history.push(this.stoneMap);
+					let newElement = {  ...this.stoneMap };
+					//debugger;
+					//Object.assign(newElement, this.stoneMap);
+					this.history.unshift(newElement);
 				}
 			}
 		},

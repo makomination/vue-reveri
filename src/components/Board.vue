@@ -9,11 +9,14 @@
 				</tr>
 			</tbody>
 		</table>
-		<h1 class="result">Black ⚫ : {{ bNum }} - White ⚪ : {{ wNum }}</h1>
+		<h1 class="result mt-3">Black ⚫ : {{ bNum }} - White ⚪ : {{ wNum }}</h1>
+		<button class="float-left mt-1">Pass</button>
 	</div>
 </template>
 <script type="text/javascript">
 	import Stone from "./Stone.vue"
+	import 'bootstrap/dist/css/bootstrap.css'
+	import 'bootstrap-vue/dist/bootstrap-vue.css'
 	export default {
 		data() {
 			return {
@@ -156,6 +159,7 @@
 							//put downside
 							if (ai - positionAi > 0 && b - positionB > 0) {
 								var j = positionB - 1;
+								label1:
 								for (var i = positionAi - 1 ; i >= 0 ; i--){
 									//some codes here...
 									var sh = alphabetArr[i];
@@ -168,7 +172,7 @@
 											stoneMap[c2] = turn;
 											flag = true;
 											k2--;
-											if (k2 <= j) break;
+											if (k2 <= j) break label1;
 										}
 									}
 									//end of some codes
@@ -180,6 +184,7 @@
 							//put upside
 							if (ai - positionAi < 0 && b - positionB < 0) {
 								var j = positionB + 1;
+								label2:
 								for (var i = positionAi + 1 ; i <= 7 ; i++){
 									//some codes here...
 									var sh = alphabetArr[i];
@@ -192,7 +197,7 @@
 											stoneMap[c2] = turn;
 											flag = true;
 											k2++;
-											if (k2 >= j) break;
+											if (k2 >= j) break label2;
 										}
 									}
 									//end of some codes
@@ -202,10 +207,12 @@
 								}
 							}
 							//45°line check
+							//debugger;
 							//downside
 							//debugger;
 							if (ai - positionAi < 0 && b - positionB > 0) {
 								var j = positionB - 1;
+								label3:
 								for (var i = positionAi + 1 ; i <= 7 ; i++){
 									//some codes here...
 									var sh = alphabetArr[i];
@@ -218,7 +225,7 @@
 											stoneMap[c2] = turn;
 											flag = true;
 											k2--;
-											if (k2 <= j) break;
+											if (k2 <= j) break label3;
 										}
 									}
 									//end of some codes
@@ -230,6 +237,7 @@
 							//upside
 							if (ai - positionAi > 0 && b - positionB < 0) {
 								var j = positionB + 1;
+								label4:
 								for (var i = positionAi - 1 ; i >= 1 ; i--){
 									//some codes here...
 									var sh = alphabetArr[i];
@@ -242,7 +250,7 @@
 											stoneMap[c2] = turn;
 											flag = true;
 											k2++;
-											if (k2 >= j) break;
+											if (k2 >= j) break label4;
 										}
 									}
 									//end of some codes
@@ -277,6 +285,6 @@
 <style type="text/css">
 	table {background: green; table-layout: fixed;}
 	.box {padding: 10px; margin-bottom: 1em}
-	.cell {width: 50px; height: 50px; padding: 0;}
+	.cell {width: 50px; height: 50px; padding: 0; border-color: black;}
 	.result {text-align: left;}
 </style>
